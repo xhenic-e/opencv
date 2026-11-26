@@ -187,8 +187,20 @@ void ramdon_draw(){
     }
 }
 
+void find(Mat &image){
+    Mat gray;
+    cvtColor(image,gray,COLOR_BGR2GRAY);
+    vector<vector<Point> > contours;
+    vector<Vec4i> hierarchy;
+    findContours(gray,contours,hierarchy,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+    for(int i=0;i<2;i++){
+        Rect  rect = boundingRect(Mat(contours[i]));//获取轮廓外接正矩形
+        rectangle(image, rect, (0, 0, 255), 2, 8, 0);
+    }
+    imshow("轮廓",image);
+}
 int main() {
-    Mat src = imread("shenzi.png");
+    Mat src = imread("D:/opencv/open/2.png");
     // Mat src = imread("shenzi.png",IMREAD_GRAYSCALE);//读入一张图片,变灰
 
     //如果读入为空的就退出
@@ -228,7 +240,9 @@ int main() {
 
     // drawellipse(src);
 
-    ramdon_draw();
+    // ramdon_draw();
+
+    find(src);
 
 
     waitKey(0);//暂停，参数为时间，单位毫秒，0为永久

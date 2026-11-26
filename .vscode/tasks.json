@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "cwd": "${fileDirname}"
+    },
+    "tasks": [
+        {
+            "label": "OpenCV: 构建当前文件 (MSVC)",
+            "detail": "用 MSVC + D:\\opencv 里的预编译库编译当前打开的 .cpp",
+            "type": "shell",
+            "command": "${workspaceFolder}\\tools\\cl_build.cmd",
+            "args": [
+                "${file}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        },
+        {
+            "label": "OpenCV: 运行当前文件",
+            "type": "process",
+            "command": "${workspaceFolder}\\build\\${fileBasenameNoExtension}.exe",
+            "args": [],
+            "dependsOn": "OpenCV: 构建当前文件 (MSVC)",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": true
+            }
+        }
+    ]
+}

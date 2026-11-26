@@ -1,0 +1,24 @@
+# ===== 编译产物，不要上传 =====
+build/
+*.exe
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.exp
+*.lib
+*.dll
+*.o
+*.a
+
+# ===== 编辑器/系统临时文件 =====
+.vs/
+Thumbs.db
+desktop.ini
+*.tmp
+*.log
+
+# ===== 不提交的练习用大图（按需删除注释） =====
+# shenzi.png
+# hsv.png
+# gray.png

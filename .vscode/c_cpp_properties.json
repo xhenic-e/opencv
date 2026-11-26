@@ -1,0 +1,24 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "Win32",
+      "includePath": [
+        "${workspaceFolder}",
+        "D:/opencv/opencv/build/include",
+        "D:/Visual Studio/Visual Studio/VC/Tools/MSVC/14.51.36231/include",
+        "D:/Visual Studio/Visual Studio/VC/Tools/MSVC/14.51.36231/ATLMFC/include",
+        "E:/Windows Kits/10/include/10.0.26100.0/ucrt",
+        "E:/Windows Kits/10/include/10.0.26100.0/shared",
+        "E:/Windows Kits/10/include/10.0.26100.0/um",
+        "E:/Windows Kits/10/include/10.0.26100.0/winrt",
+        "E:/Windows Kits/10/include/10.0.26100.0/cppwinrt"
+      ],
+      "defines": ["UNICODE", "_UNICODE"],
+      "compilerPath": "D:/Visual Studio/Visual Studio/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-msvc-x64"
+    }
+  ]
+}

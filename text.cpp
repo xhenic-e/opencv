@@ -188,19 +188,104 @@ void ramdon_draw(){
 }
 
 void find(Mat &image){
-    Mat gray;
-    cvtColor(image,gray,COLOR_BGR2GRAY);
-    vector<vector<Point> > contours;
-    vector<Vec4i> hierarchy;
-    findContours(gray,contours,hierarchy,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
-    for(int i=0;i<2;i++){
-        Rect  rect = boundingRect(Mat(contours[i]));//获取轮廓外接正矩形
-        rectangle(image, rect, (0, 0, 255), 2, 8, 0);
-    }
-    imshow("轮廓",image);
+    Mat hsv,mask;
+    cvtColor(image, hsv, COLOR_BGR2HSV);//把src转化为HSV图像保存为hsv
+    inRange(hsv, Scalar(100,100,100), Scalar(130,255,255), mask);  
+    //识别蓝色范围，把hsv中属于范围内的像素变为白色，其余变为黑色
+    // 白色=找到的蓝色
+    imshow("1. 蓝色掩码", mask); //imshow显示图片     
+
+    vector<vector<Point>> blue_contours;//创建一个contours存放蓝色边界的点
+
+    //.clone()克隆一个mask1防止破坏mask1
+    findContours(mask.clone(), blue_contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+
+    printf("找到 %d 个蓝色轮廓\n", (int)blue_contours.size());
+
+    Mat blue_result = image.clone();
+    drawContours(blue_result, blue_contours, -1, Scalar(0,255,255),2,8);  //黄色描边
+    imshow("2. 黄色轮廓", blue_result);
+
 }
+
+void drawpolygon1(){
+    Mat blank=Mat::zeros(Size(512,512),CV_8UC3);
+    blank=Scalar(255,255,255);
+
+    vector<vector<Point>> contours={{Point(100,100),Point(80,180),
+    Point(200,300),Point(300,150),Point(250,50)}};
+    drawContours(blank,contours,-1,Scalar(0,0,255),2,8);
+    //可绘制多边形也可填充多边形
+
+    imshow("绘制多边形1",blank);
+}
+
+void drawpolygon2(){
+    Mat blank=Mat::zeros(Size(512,512),CV_8UC3);
+    blank=Scalar(255,255,255);
+
+    vector<Point> pts={Point(100,100),Point(80,180),
+    Point(200,300),Point(300,150),Point(250,50)};
+    polylines(blank,pts,true,Scalar(0,255,100),2,8);//无法填充多边形
+
+    imshow("绘制多边形2",blank);
+}
+
+void drawpolygon3(){
+    Mat blank=Mat::zeros(Size(512,512),CV_8UC3);
+    blank=Scalar(255,255,255);
+
+    vector<Point> pts={Point(100,100),Point(80,180),
+    Point(200,300),Point(300,150),Point(250,50)};
+    fillPoly(blank,pts,Scalar(0,255,100),8);//填充多边形
+
+
+    imshow("绘制多边形3",blank);
+}
+
+void drawRotatoRect(Mat &image){
+    Mat hsv,mask;
+    cvtColor(image,hsv,COLOR_BGR2HSV);
+    inRange(hsv,Scalar(100,100,100),Scalar(130,255,255),mask);
+
+    vector<vector<Point>> contours;
+    findContours(mask.clone(),contours,RETR_EXTERNAL,CHAIN_APPROX_SIMPLE);
+
+    Mat result =image.clone();
+    for(int i=0;i<contours.size();i++){
+        RotatedRect rr = minAreaRect(contours[i]);
+
+        Point2f pts[4];
+        rr.points(pts);
+
+        for(int j=0;j<4;j++){
+            line(result,pts[j],pts[(j+1)%4],Scalar(100,100,100),2,8);
+        }
+
+    }
+    imshow("绘制旋转矩形",result);
+}
+
+void getBars(Mat &image){
+    Mat gray,mask,small;
+    cvtColor(image,gray,COLOR_BGR2GRAY);
+    for(int i=0;i<255;i+=10){
+
+        string s=to_string(i);
+
+        threshold(gray,mask,i,255,THRESH_BINARY);
+
+        resize(mask,small,Size(mask.cols/3,mask.rows/3));
+
+        imshow(s,small);
+
+        waitKey(0);
+        destroyAllWindows();
+    }
+}
+
 int main() {
-    Mat src = imread("D:/opencv/open/2.png");
+    Mat src = imread("D:/opencv/open/3.jpg");
     // Mat src = imread("shenzi.png",IMREAD_GRAYSCALE);//读入一张图片,变灰
 
     //如果读入为空的就退出
@@ -242,7 +327,17 @@ int main() {
 
     // ramdon_draw();
 
-    find(src);
+    // find(src);
+
+    // drawpolygon1();
+
+    // drawpolygon2();
+
+    // drawpolygon3();
+
+    // drawRotatoRect(src);
+
+    getBars(src);
 
 
     waitKey(0);//暂停，参数为时间，单位毫秒，0为永久

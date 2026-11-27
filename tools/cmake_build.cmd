@@ -52,6 +52,6 @@ if errorlevel 1 (
 echo.
 echo [OK] Executables in: %BUILD_DIR%
 echo      ColorBandLocator.exe
-echo      text.exe
+echo      LightBarLocator.exe
 popd
 exit /b 0

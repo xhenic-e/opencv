@@ -69,7 +69,7 @@ function(add_opencv_app target_name)
         COMMENT "复制 OpenCV 运行库到 ${target_name} 输出目录"
         VERBATIM)
 
-    # 把测试图片也拷过去：程序里用的是相对路径 "2.png" / "shenzi.png"
+    # 把测试图片也拷过去：程序里用的是相对路径 "2.png" 
     file(GLOB _test_images
          "${CMAKE_CURRENT_SOURCE_DIR}/*.png"
          "${CMAKE_CURRENT_SOURCE_DIR}/*.jpg")
@@ -87,7 +87,6 @@ endfunction()
 # ---------------------------------------------------------------------------
 add_opencv_app(ColorBandLocator ColorBandLocator.cpp)   # 任务一
 add_opencv_app(LightBarLocator  LightBarLocator.cpp)    # 任务二
-add_opencv_app(text             text.cpp)               # 课程练习
 
 message(STATUS "OpenCV ${OpenCV_VERSION} from ${OpenCV_DIR}")
 message(STATUS "Build: cmake --build build_cmake --config Release")

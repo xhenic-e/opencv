@@ -11,6 +11,7 @@ build_cmake/
 *.dll
 *.o
 *.a
+practice/
 
 # ===== 编辑器/系统临时文件 =====
 .vs/

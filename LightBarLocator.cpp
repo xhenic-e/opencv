@@ -13,8 +13,7 @@ int main() {
         return -1;
     }
     
-    Mat gray, mask,
-    blank=Mat::zeros(src.size(),src.type());//创建Mat类型的函数
+    Mat gray, mask;//创建Mat类型的函数
     
     cvtColor(src, gray, COLOR_BGR2GRAY);//把src转化为灰度图像保存为gray
 
@@ -22,7 +21,7 @@ int main() {
     //THRESH_BINARY为规则，即大于阈值的像素要填充填充色
     threshold(gray,mask,150,255,THRESH_BINARY);
 
-    imshow("阈值图",mask);
+    imshow("threshold",mask);
 
     
     vector<vector<Point>> contours;
@@ -32,6 +31,7 @@ int main() {
     for(int i=0;i<contours.size();i++){
         //计算面积
         double area= contourArea(contours[i]);
+        //面积太小的不画矩形
         if(area>110){
             
             RotatedRect rr = minAreaRect(contours[i]);   

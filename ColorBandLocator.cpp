@@ -48,7 +48,7 @@ int main() {
     moveWindow("3. 红色掩码", 500, 50);
     moveWindow("4. 绿色轮廓", 500, 300);
 
-    imwrite("D:/opencv/open/redblue_result.png",redblue_result);//保存处理后的图片
+    imwrite("redblue_result.png",redblue_result);//保存处理后的图片
     
 
     waitKey(0);//暂停，参数为时间，单位毫秒，0为永久
